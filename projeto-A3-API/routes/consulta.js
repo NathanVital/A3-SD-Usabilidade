@@ -1,32 +1,41 @@
 const express = require('express')
 const router = express.Router()
 
+const Consulta = require('../modules/Consulta')
+
 router.use(express.json())
 
-const consulta =[]
-let organizer = 0
 
-router.post('/clinica/consulta',(req, res) =>{
-    organizer++
-    try {
-        const exame = req.body
-        //consulta [organizer] = {'id' :organizer, 'descricao': exame.descricao , 'dateTime': exame.dateTime, 'paciente': exame.paciente , 'medico': exame.medico , 'status': 'agendado'}
-        
-        res.status(200).send(consulta [organizer])
+router.post('/add',(req, res, next) => {
+    let consulta = new Consulta ({
+        data:   req.body.data,//'2022-11-02T15:00',
+        cpf:   req.body.cpf,//"123.456.789.00",
+        status:   "agendado",
+        crm:   req.body.crm//"12345678-9/UF"
+    })
+    consulta.save()
+    .then(consulta => {
+        res.json({
+            message : 'consulta created successfully!',
+            consulta
+        })
+    }).catch(err => {
+        res.status(500).json({
+            message : "An error occured"+err
+        }
+        )
+    })}
+)
+
+router.get('/list', (req, res, next) => {
+    try{
+        Consulta.find().then((response) =>{
+            res.status(200).json({response})
+        })
         
     }
     catch(err){
         res.status(500).send(err)
-        console.log(err)
-    }
-})
-
-router.get('/clinica/consulta', (req,res) => {
-    try{
-        res.status(200).send(consulta)
-    }
-    catch(err){
-        res.status(500).send(consulta)
     }
 
 })

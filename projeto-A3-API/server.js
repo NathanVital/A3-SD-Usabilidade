@@ -18,6 +18,8 @@ db.once('open', () => {
 const app =  express()
 
 const AuthRoute =   require('./routes/auth')
+const ConsultaRoute =   require('./routes/consulta')
+const Authentication = require("./middleware/authenticate")
 
 app.use(express.json())
 
@@ -27,4 +29,5 @@ app.listen(PORT , () => {
     console.log("listen on port :"+ PORT)
 })
 
-app.use('/user', AuthRoute) 
+app.use('/user', AuthRoute)
+app.use('/consulta',Authentication , ConsultaRoute) 
