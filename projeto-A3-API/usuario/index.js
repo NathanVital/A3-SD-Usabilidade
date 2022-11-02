@@ -20,9 +20,9 @@ try {
     const{cpf} = req.body
     const{crm} = req.body
     const{senha} = req.body
+    const {especie} = req.body
 
-
-    usuarios[organizer] = {organizer, nome, email, telefone, cpf, senha, crm}
+    usuarios[organizer] = {organizer, nome, email, telefone, cpf, senha, crm, especie}
     //(inserir) consulta de consultas - usuario verifica consulta marcada.
     res.status(201).send(usuarios[organizer])
 } catch (error) {
