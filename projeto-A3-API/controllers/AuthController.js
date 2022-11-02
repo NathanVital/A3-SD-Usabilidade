@@ -1,6 +1,7 @@
 const User      = require("../modules/User")
 const bcrypt    = require("bcryptjs")
 const jwt       = require("jsonwebtoken")
+const { response } = require("express")
 
 const register  = (req, res, next) => {
     bcrypt.hash(req.body.password, 10, (err, hashedPass) => {
@@ -50,10 +51,12 @@ const login = (req, res, next) => {
                     })
                 }
                 if(result) {
-                    let token = jwt.sign({name: user.name}, 'change this', {expiresIn: '1h'})
+                    let token = jwt.sign({name: user.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME})
+                    let refreshtoken = jwt.sign({name: user.name}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME})
                     res.json({
                         message: 'login successful',
-                        token
+                        token,
+                        refreshtoken
                     })
                 }else{
                     res.status(400).json({
@@ -70,7 +73,27 @@ const login = (req, res, next) => {
     })
 }
 
+const refreshToken = (req, res, next) => {
+    const refreshToken = req.body.refreshToken
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decode) => {
+        if(err) {
+            response.status(400).json({
+                err
+            })
+        } else {
+            let token = jwt.sign({name: decode.name}, precess.env.ACCESS_TOKEN_SECRET , {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME})
+            let refreshToken = req.body.refreshToken
+            res.status(200).json({
+                message: "Token refreshed successfully!",
+                token,
+                refreshToken
+            })
+        }
+    })
+}
+
 module.exports = {
     register,
-    login
+    login,
+    refreshToken
 }
