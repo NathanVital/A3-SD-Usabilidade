@@ -11,7 +11,8 @@ router.post('/add',(req, res, next) => {
         data:   req.body.data,//'2022-11-02T15:00',
         cpf:   req.body.cpf,//"123.456.789.00",
         status:   "agendado",
-        crm:   req.body.crm//"12345678-9/UF"
+        crm:   req.body.crm,//"12345678-9/UF",
+        obs: req.body.obs
     })
     consulta.save()
     .then(consulta => {

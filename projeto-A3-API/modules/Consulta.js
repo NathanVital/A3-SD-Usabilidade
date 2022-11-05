@@ -3,7 +3,7 @@ const Schema        = mongoose.Schema
 
 const consultaSchema    = new Schema({
         data:   {
-            type: Date
+            type: Date //'2022-11-02T15:00',
         },
         cpf:   {
             type: String
@@ -13,7 +13,10 @@ const consultaSchema    = new Schema({
         },
         crm:   {
             type: String
-        }
+        },
+        obs:   {
+            type: String
+        },
 }, {timestamps: true})
 
 const Consulta = mongoose.model('Consulta',consultaSchema)
