@@ -1,0 +1,29 @@
+{
+  "name": "a3-sd-usabilidade",
+  "version": "1.0.0",
+  "description": "Projeto A3 referente as UCs: Sistemas Distribuídos &amp; Mobile e Usabilidade, Desenvolvimento Web, Mobile e Jogos, onde criamos uma solução computacional para uma clínica médica.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanVital/A3-SD-Usabilidade.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NathanVital/A3-SD-Usabilidade/issues"
+  },
+  "homepage": "https://github.com/NathanVital/A3-SD-Usabilidade#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20"
+  }
+}

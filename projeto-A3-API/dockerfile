@@ -1,7 +1,0 @@
-
-FROM mongo-express
-
-RUN --detach --name=dblocal 5000:5000 mongo-express
-
-EXPOSE 5000
-
