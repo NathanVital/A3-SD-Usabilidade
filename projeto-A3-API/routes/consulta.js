@@ -7,6 +7,7 @@ router.use(express.json())
 
 
 router.post('/add',(req, res, next) => {
+    
     let consulta = new Consulta ({
         data:   req.body.data,//'2022-11-02T15:00',
         cpf:   req.body.cpf,//"123.456.789.00",
@@ -28,9 +29,51 @@ router.post('/add',(req, res, next) => {
     })}
 )
 
+router.delete("/delete", (req, res, next) => {
+    let consultaID = req.body.consultaID
+
+    Consulta.findOneAndRemove(consultaID)
+    .then(() => {
+       res.json({ 
+        message: "consulta apagada"
+    })
+    })
+    .catch((err) => {
+        res.json({
+            message: "um erro ocorreu"
+        })
+    })
+})
+
+router.post('/update', (req, res, next) => {
+    let consultaID = req.body.consultaID
+
+    let consultaData = {
+        data:   req.body.data,//'2022-11-02T15:00',
+        cpf:   req.body.cpf,//"123.456.789.00",
+        status:   "agendado",
+        crm:   req.body.crm,//"12345678-9/UF",
+        obs: req.body.obs
+    }
+
+    Consulta.findByIdAndUpdate(consultaID, {$set: consultaData})
+    .then(() =>{
+        res.json({
+            message: 'consulta modificada'
+        })
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({
+            message: 'um erro ocorreu'
+        })
+    })
+
+})
+
 router.get('/list', (req, res, next) => {
     try{
-        Consulta.find().then((response) =>{
+        Consulta.find(req.body).then((response) =>{
             res.status(200).json({response})
         })
         
