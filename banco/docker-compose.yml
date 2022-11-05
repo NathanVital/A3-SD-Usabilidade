@@ -3,16 +3,17 @@ services:
   mongo:
     image: mongo:5.0
     container_name: mongo
-    #environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=root
-    #   - MONGO_INITDB_ROOT_PASSWORD=password
+    environment:
+       - MONGO_INITDB_ROOT_USERNAME=root
+       - MONGO_INITDB_ROOT_PASSWORD=password
     restart: unless-stopped
     ports:
       - "27017:27017"
-    volumes:
-      - ./dabatabase/db:/data/db
-      - ./dabatabase/dev.archive:/Databases/dev.archive
-      - ./database/production:/Databases/production
+    #volumes:
+    #  - ./banco/dabatabase/db:/data/db
+    #  - ./banco/dabatabase/dev.archive:/Databases/dev.archive
+    #  - ./banco/database/production:/Databases/production
+#-------------------------------
   mongo-express:
     image: mongo-express
     container_name: test
