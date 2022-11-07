@@ -23,6 +23,8 @@ const app =  express()
 const AuthRoute =   require('./routes/auth')
 const ConsultaRoute =   require('./routes/consulta')
 const Authentication = require("./middleware/authenticate")
+const PacienteRoute = require("./routes/paciente")
+
 
 app.use(express.json())
 
@@ -34,3 +36,4 @@ app.listen(PORT , () => {
 
 app.use('/user', AuthRoute)
 app.use('/consulta',Authentication , ConsultaRoute) 
+app.use('/paciente',Authentication , PacienteRoute) 
