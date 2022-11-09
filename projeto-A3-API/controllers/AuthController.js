@@ -37,6 +37,63 @@ const register  = (req, res, next) => {
     })
 }
 
+const update = (req, res, next) => {
+    let userID = req.body.userID
+
+    let userData = {
+        name : req.body.name,
+        email : req.body.email,
+        phone : req.body.phone,
+        cpf : req.body.cpf,
+        crm : req.body.crm,
+        especie : req.body.especie
+    }
+
+    User.findByIdAndUpdate(userID, {$set: userData})
+    .then(() =>{
+        res.json({
+            message: 'paciente modificada'
+        })
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.json({
+            message: 'um erro ocorreu'
+        })
+    })
+
+}
+
+const dell =(req, res, next) => {
+    let userID = req.body.userID
+
+    User.findOneAndRemove(userID)
+    .then(() => {
+       res.json({ 
+        message: "Usuário apagada"
+    })
+    })
+    .catch((err) => {
+        res.json({
+            message: "um erro ocorreu",
+            err
+        })
+    })
+}
+
+const list = (req, res, next) => {
+    try{
+        User.find(req.body).then((response) =>{
+            res.status(200).json({response})
+        })
+        
+    }
+    catch(err){
+        res.status(500).send(err)
+    }
+
+}
+
 const login = (req, res, next) => {
     let username = req.body.username
     let password = req.body.password
@@ -78,10 +135,10 @@ const refreshToken = (req, res, next) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decode) => {
         if(err) {
             response.status(400).json({
-                err
+                message: err
             })
         } else {
-            let token = jwt.sign({name: decode.name}, precess.env.ACCESS_TOKEN_SECRET , {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME})
+            let token = jwt.sign({name: decode.name}, process.env.ACCESS_TOKEN_SECRET , {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME})
             let refreshToken = req.body.refreshToken
             res.status(200).json({
                 message: "Token refreshed successfully!",
@@ -95,5 +152,8 @@ const refreshToken = (req, res, next) => {
 module.exports = {
     register,
     login,
-    refreshToken
+    refreshToken,
+    dell, 
+    list,
+    update
 }
