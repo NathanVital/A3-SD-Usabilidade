@@ -33,7 +33,13 @@ MongoExpress: p 8081:8081
 
 URL = mongodb://localhost:27017/testdb
 
-
+# env
+ACCESS_TOKEN_SECRET 
+REFRESH_TOKEN_SECRET 
+ACCESS_TOKEN_EXPIRE_TIME 
+REFRESH_TOKEN_EXPIRE_TIME 
+PORT 
+HOST 
 
 
 nível de Usuarios:
