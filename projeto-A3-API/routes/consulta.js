@@ -9,11 +9,16 @@ router.use(express.json())
 router.post('/add',(req, res, next) => {
     
     let consulta = new Consulta ({
-        data:   req.body.data,//'2022-11-02T15:00',
-        cpf:   req.body.cpf,//"123.456.789.00",
-        status:   req.body.status,
-        crm:   req.body.crm,//"12345678-9/UF",
-        obs: req.body.obs
+        agenda:             req.body.agenda,
+        occupation:         req.body.occupation,
+        medico:             req.body.medico,//"12345678-9/UF"
+        data:               req.body.data,//'2022-11-02T15:00'
+        horario:            req.body.horario,
+        paciente:           req.body.paciente,
+        celular:            req.body.celular,
+        telefone:           req.body.telefone,
+        cpf:                req.body.cpf,
+        observacoes:        req.body.observacoes
     })
     consulta.save()
     .then(consulta => {
@@ -45,15 +50,20 @@ router.delete("/delete", (req, res, next) => {
     })
 })
 
-router.post('/update', (req, res, next) => {
+router.put('/update', (req, res, next) => {
     let consultaID = req.body.consultaID
 
     let consultaData = {
-        data:   req.body.data,//'2022-11-02T15:00',
-        cpf:   req.body.cpf,//"123.456.789.00",
-        status:   req.body.status,
-        crm:   req.body.crm,//"12345678-9/UF",
-        obs: req.body.obs
+    agenda:             req.body.agenda,
+    occupation:         req.body.occupation,
+    medico:             req.body.medico,
+    data:               req.body.data,
+    horario:            req.body.horario,
+    paciente:           req.body.paciente,
+    celular:            req.body.celular,
+    telefone:           req.body.telefone,
+    cpf:                req.body.cpf,
+    observacoes:        req.body.observacoes
     }
 
     Consulta.findByIdAndUpdate(consultaID, {$set: consultaData})
@@ -71,9 +81,11 @@ router.post('/update', (req, res, next) => {
 
 })
 
-router.get('/list', (req, res, next) => {
+router.post('/list', (req, res, next) => {
+
+    const requestBody = req.body
     try{
-        Consulta.find(req.body).then((response) =>{
+        Consulta.find(requestBody).then((response) =>{
             res.status(200).json({response})
         })
         

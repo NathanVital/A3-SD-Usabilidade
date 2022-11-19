@@ -9,10 +9,18 @@ router.use(express.json())
 router.post('/add',(req, res, next) => {
     
     let paciente = new Paciente ({
-        cpf:   req.body.cpf,
-        name:   req.body.name,
-        email:   req.body.email,
-        phone: req.body.phone
+
+        firstname:  req.body.firstname,
+        lastname:   req.body.lastname,
+        sexo:       req.body.sexo,
+        nascimento: req.body.nascimento,
+        celular:    req.body.celular,
+        telefone:   req.body.telefone,
+        cpf:        req.body.cpf,
+        endereco:   req.body.endereco,
+        email:      req.body.email,
+        ativo:      req.body.ativo
+        
     })
     paciente.save()
     .then(paciente => {
@@ -44,14 +52,20 @@ router.delete("/delete", (req, res, next) => {
     })
 })
 
-router.post('/update', (req, res, next) => {
+router.put('/update', (req, res, next) => {
     let pacienteID = req.body.pacienteID
 
     let pacienteData = {
-        cpf:   req.body.cpf,
-        name:   req.body.name,
-        email:   req.body.email,
-        phone: req.body.phone
+        firstname:  req.body.firstname,
+        lastname:   req.body.lastname,
+        sexo:       req.body.sexo,
+        nascimento: req.body.nascimento,
+        celular:    req.body.celular,
+        telefone:   req.body.telefone,
+        cpf:        req.body.cpf,
+        endereco:   req.body.endereco,
+        email:      req.body.email,
+        ativo:      req.body.ativo
     }
 
     Paciente.findByIdAndUpdate(pacienteID, {$set: pacienteData})
@@ -69,9 +83,11 @@ router.post('/update', (req, res, next) => {
 
 })
 
-router.get('/list', (req, res, next) => {
+router.post('/list', (req, res, next) => {
+
+    const requestBody = req.body 
     try{
-        Paciente.find(req.body).then((response) =>{
+        Paciente.find(requestBody).then((response) =>{
             res.status(200).json({response})
         })
         
